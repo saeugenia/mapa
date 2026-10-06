@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual Definitivo - Clase Grabada Música</title>
+    <style>
+        :root {
+            --primary-bg: #f4f6f8;
+            --text-main: #2d3748;
+            --color-inicio: #e6fffa;
+            --border-inicio: #38b2ac;
+            --color-desarrollo: #ebf8ff;
+            --border-desarrollo: #3182ce;
+            --color-cierre: #fff5f5;
+            --border-cierre: #e53e3e;
+            --color-mbe: #fefcbf;
+            --border-mbe: #d69e2e;
+            --color-dua: #faf5ff;
+            --border-dua: #9f7aea;
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            line-height: 1.4;
+            margin: 0;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed #cbd5e0;
+            position: relative;
+        }
+
+        .header h1 {
+            color: #1a202c;
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .objective-box {
+            background-color: #f7fafc;
+            border-left: 5px solid #4a5568;
+            padding: 0.8rem 1.2rem;
+            border-radius: 4px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            display: inline-block;
+            text-align: left;
+            max-width: 950px;
+        }
+
+        .btn-print {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #4a5568;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .phase-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .phase-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin-bottom: 0.3rem;
+        }
+
+        .title-inicio { background-color: var(--color-inicio); border: 2px solid var(--border-inicio); color: #234e52; }
+        .title-desarrollo { background-color: var(--color-desarrollo); border: 2px solid var(--border-desarrollo); color: #2c5282; }
+        .title-cierre { background-color: var(--color-cierre); border: 2px solid var(--border-cierre); color: #742a2a; }
+
+        .card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            color: #2d3748;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card ul { padding: 0; margin: 0; list-style: none; }
+        .card li { position: relative; padding-left: 1.2rem; margin-bottom: 0.6rem; font-size: 0.92rem; }
+        .card li::before { content: '👉'; position: absolute; left: 0; top: 0; font-size: 0.8rem; }
+
+        .card-mbe { background-color: var(--color-mbe); border-left: 4px solid var(--border-mbe); }
+        .card-mbe h3 { color: #744210; border-bottom-color: #f6e05e; }
+        .card-dua { background-color: var(--color-dua); border-left: 4px solid var(--border-dua); }
+        .card-dua h3 { color: #44337a; border-bottom-color: #d6bcfa; }
+
+        .action { font-weight: 700; color: #2d3748; }
+        .quote { font-weight: 600; color: #2b6cb0; font-style: italic; }
+
+        @media print {
+            @page { size: landscape; margin: 4mm; }
+            body { background: white; padding: 0; font-size: 9.5px; line-height: 1.12; }
+            .container { box-shadow: none; padding: 0; width: 100%; max-width: 100%; }
+            .btn-print { display: none; }
+            .header { margin-bottom: 0.4rem; padding-bottom: 0.2rem; }
+            .header h1 { font-size: 13px; margin-bottom: 0.1rem; }
+            .objective-box { padding: 0.2rem 0.5rem; font-size: 10px; margin-top: 0; }
+            .map-grid { gap: 6px; }
+            .phase-column { gap: 4px; }
+            .phase-title { font-size: 10.5px; padding: 0.15rem; margin-bottom: 0; }
+            .card { padding: 0.3rem 0.5rem; border-width: 1px; border-radius: 4px; break-inside: avoid; }
+            .card h3 { font-size: 9.5px; margin-bottom: 0.15rem; padding-bottom: 0.1rem; }
+            .card li { font-size: 8.8px; margin-bottom: 0.2rem; padding-left: 0.9rem; }
+            .card li::before { font-size: 7.5px; }
+            .quote { color: #1a365d; font-weight: bold; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <button class="btn-print no-print" onclick="window.print()">🖨️ Imprimir 1 Hoja (Horizontal)</button>
+            <h1>MAPA DE CLASE DEFINITIVO</h1>
+            <div class="objective-box">
+                🎯 <strong>OA CLASE:</strong> Interpretar patrones rítmicos de negras, corcheas y silencio de negra utilizando cotidiáfonos, demostrando trabajo colaborativo.
+            </div>
+        </header>
+
+        <div class="map-grid">
+            
+            <!-- COLUMNA INICIO -->
+            <div class="phase-column">
+                <div class="phase-title title-inicio">🟢 INICIO</div>
+                
+                <div class="card card-dua">
+                    <h3>💜 1. Activación Corporal</h3>
+                    <ul>
+                        <li><span class="action">Saludo:</span> <span class="quote">"Buenos días estudiantes, ¿cómo están? (...) clase que requiere mucha energía, así que espero que tengan mucho ánimo."</span></li>
+                        <li><span class="action">Juego Eco Rítmico:</span> <span class="quote">"Yo haré un ritmo combinando mis manos y mi voz, y ustedes deberán responder tal cual, como un eco..."</span> <span class="action">(Ejecutas el eco).</span></li>
+                        <li><span class="action">Mostrar Pizarra:</span> Casa - Casa - Pan - Pare.</li>
+                        <li><span class="action">Preguntar:</span> <span class="quote">"Tenemos una casa, una incognita, un pan y un pare ¿Qué dibujo vendría acá?"</span> (Pausa). <span class="quote">"¿Y por qué eligieron ese dibujo? ¿Cómo descubrieron lo que había detrás de la incógnita?"</span></li>
+                        <li><span class="action">Conceptualizar:</span> <span class="quote">"¡Exacto! Hay un orden y se repite (...) ¿Alguien sabe cómo se llama eso?"</span></li>
+                        <li><span class="action">Pista:</span> <span class="quote">"Empieza con P..."</span> (Niños: ¡Patrón!).</li>
+                        <li><span class="action">Pregunta Clave:</span> <span class="quote">"Pero en simples palabras ¿Qué es un patrón?"</span></li>
+                        <li><span class="action">Conectar:</span> <span class="quote">"Entonces, sabiendo esto... lo que ustedes acaban de hacer recién al copiar mis movimientos en orden, ¿qué creen que fue?"</span> (¡Un patrón rritmico!).</li>
+                        <li><span class="action">Transformar a música:</span> <span class="quote">"En la música hacemos exactamente lo mismo pero utilizando figuras rítmicas (...) Ahora, veremos cómo es un patrón rítmico."</span></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🎯 2. Desentrañar el Objetivo y Cotidiáfonos</h3>
+                    <ul>
+                        <li><span class="action">Lectura OA:</span> Pedir a [Leonidas] que lea en voz alta.</li>
+                        <li><span class="action">Preguntar:</span> <span class="quote">"Primero, ¿Qué significa la palabra interpretar?"</span> (Si cuesta: pasar de símbolos a sonidos).</li>
+                        <li><span class="action">Cotidiáfonos:</span> <span class="quote">"Segundo, usaremos cotidiáfonos. ¿Quién podría recordarnos qué es un cotidiáfono?"</span></li>
+                        <li><span class="action">Foto Chimbarongo:</span> <span class="quote">"Acá tenemos una fotografía de una agrupación musical de Chimbarongo ¿Qué tipo de agrupación musical es? ¿Dónde han visto agrupaciones como esta?"</span></li>
+                        <li><span class="action">Reemplazar instrumentos:</span> <span class="quote">"Nosotros conocemos las batucadas, sin embargo no tenemos los instrumentos musicales (...) ¿Cómo reemplazamos los instrumentos de la batucada? Según lo que ven frente a ustedes... ¿Cómo reemplazamos la caja, el surdo, el agogó? "</span></li>
+                        <li><span class="action">Preguntar a alumnos:</span> <span class="quote">"[Edward], pensando en las cosas de tu casa ¿qué otro objeto de tu cocina usarías como cotidiáfono? ¿Y tú Cristóbal cuál utilizarías?"</span></li>
+                        <li><span class="action">Enfatizar Colaboración:</span> <span class="quote">"Muy importante, nuestro objetivo es demostrar trabajar colaborativamente. ¿Qué estrategias podemos usar para trabajar de forma colaborativa? Podríamos tocar un patrón rítmico de forma individual pero cuando lo hacemos juntos y colaboramos, armamos una verdadera batucada."</span></li>
+                    </ul>
+                </div>
+
+                <div class="card card-mbe">
+                    <h3>🌟 3. MBE: Inclusión y Género</h3>
+                    <ul>
+                        <li><span class="action">Observar foto:</span> <span class="quote">"¿A quiénes observamos en esa imagen?"</span> (jóvenes, adultos, mujeres, hombres, niños, etc.).</li>
+                        <li><span class="action">Mito:</span> <span class="quote">"Hay quienes piensan que por el tamaño, o el peso (...) la percusión exige fuerza bruta, incluso hay muchos que creen que hay instrumentos para hombres y otros para mujeres."</span></li>
+                        <li><span class="action">Pregunta Clave MBE:</span> <span class="quote">"Imaginen estamos acá y vienen a observar nuestra clase y nos dice que hay instrumentos que solo pueden tocar los hombres y otros que solo puedan tocar las mujeres ¿Qué le responderían a quien piensa así? ¿Y qué demuestra nuestra propia clase hoy?"</span></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🚦 4. Señales de Dirección</h3>
+                    <ul>
+                        <li><span class="action">Recordar:</span> Cuenta de entrada (1,2,3,y), Puño en alto (silencio), Señalar sección, Posición de descanso.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- COLUMNA DESARROLLO -->
+            <div class="phase-column">
+                <div class="phase-title title-desarrollo">🔵 DESARROLLO (20 min)</div>
+
+                <div class="card card-dua">
+                    <h3>🎼 1. Lectura de Patrones (DUA)</h3>
+                    <ul>
+                        <li><span class="action">Observar pizarra:</span> Surdo, Caixa, Agogó.</li>
+                        <li><span class="action">Apoyo Verbal:</span> <span class="quote">"¿Cómo tocamos la figura de negra con nuestras manos? (...) Si para la negra usamos la palabra 'Pan' y para el silencio hacemos un stop, ¿Qué palabra podríamos utilizar como apoyo para la doble corchea?"</span> (Dejar proponer). <span class="quote">"Perfecto, usaremos 'ca-sa'."</span></li>
+                        <li><span class="action">Análisis DUA:</span> <span class="quote">"¿Y por qué creen que esta palabra nos ayuda a representar las dos corcheas?"</span></li>
+                        <li><span class="action">Práctica guiada:</span> <span class="quote">"Todo el curso interpreta el patrón del surdo usando las manos y las palabras de apoyo. Vamos a ir de a poco: Voy preguntando niño a niño por cada tiempo para que aporten con su forma y vision como se toca cada figura."</span></li>
+                    </ul>
+                </div>
+
+                <div class="card card-mbe">
+                    <h3>🌟 2. Ensamble y Monitoreo</h3>
+                    <ul>
+                        <li><span class="action">Instrucción:</span> <span class="quote">"Recuerden que nuestro objetivo es trabajar de manera colaborativa: colaborar no es solo tocar al mismo tiempo ni hacer silencio cuando yo levante el puño, colaborar significa escucharnos y apoyarnos entre nosotros incluso hacer sugerencias..."</span></li>
+                        <li><span class="action">Dar cuenta entrada al surdo.</span></li>
+                        <li><span class="action">Rol auditores:</span> <span class="quote">"Mientras vamos entrando con los instrumentos, los niños que escuchan verbalmente evaluarán cómo lo van haciendo quienes tocan y se les pedirá un consejo para mejorarlo."</span></li>
+                    </ul>
+                </div>
+
+                <div class="card card-mbe">
+                    <h3>🔍 3. Auditoría Sonora (4 Pausas)</h3>
+                    <ul>
+                        <li><span class="action">Pausa 1 (Pares):</span> <span class="quote">"¿Qué hacemos en el caso del silencio al tocar el instrumento? ¿Alguien tiene alguna sugerencia para sus compañeros? Probemos la sugerencia..."</span> (Tocan). <span class="quote">"¿Funcionó? ¿Cómo sabemos que sonó mejor? Agogós, ¿Por qué es importante escuchar a nuestros compañeros mientras tocamos?"</span></li>
+                        <li><span class="action">Pausa 2 (Técnica):</span> <span class="quote">"Chicos, ¿Qué estrategia le podemos dar a nuestro compañero para tocar su patrón con más seguridad? Veo que algunos están haciendo puras negras. Miren la pizarra, tienen dos corcheas. [Mirar a la sección compañera] ¿Qué consejo técnico le darían a su compañero para lograr el ritmo del 'ca-sa' usando el rebote de la baqueta?"</span> (Aplican).</li>
+                        <li><span class="action">Pausa 3 (Pulso):</span> <span class="action">Levantar puño cerrado (Silencio).</span> <span class="quote">"Supongamos que nos desfasamos. ¿Qué pasó con nuestro pulso base? ¿A quién debemos escuchar con más atención para volver a acoplarnos y respetar los turnos?"</span> (Aplican).</li>
+                        <li><span class="action">Pausa 4 (Estrategia):</span> <span class="quote">"¿Qué podríamos hacer para que no olvides el silencio? ¿Hay algún movimiento que podríamos hacer (...) para asegurar que no suene nada en ese tiempo? ¿Creen que esta estrategia funcionaría con otro instrumento? ¿Por qué?"</span> (Aplican ajustes). <span class="quote">"Ahora que volvimos a interpretar con todos los ajustes, ¿nuestra estrategia colaborativa funcionó? ¿Qué evidencia sonora tenemos para decir que mejoramos?"</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- COLUMNA CIERRE -->
+            <div class="phase-column">
+                <div class="phase-title title-cierre">🔴 CIERRE (10 min)</div>
+
+                <div class="card card-dua">
+                    <h3>🎉 1. Ejecución Final</h3>
+                    <ul>
+                        <li><span class="action">Simular Presentación:</span> <span class="quote">"Bien, ahora vamos a ver el resultado de nuestro trabajo, quisiera que imaginen que somos una batucada famosa, imaginen que en el público está nuestro cantante favorito, nuestra familia, nuestro youtuber favorito y tendremos que dejarlos totalmente impresionados."</span></li>
+                        <li><span class="action">Dirigir ejecución continua.</span></li>
+                        <li><span class="action">Preguntar:</span> <span class="quote">"¡Excelente! ¿A quiénes imaginaron en el público?"</span></li>
+                    </ul>
+                </div>
+
+                <div class="card card-mbe">
+                    <h3>🌟 2. Transferencia a la Vida Real</h3>
+                    <ul>
+                        <li><span class="action">Pedir posición de descanso.</span></li>
+                        <li><span class="action">Conectar:</span> <span class="quote">"Hoy logramos hacer música no solo porque leímos figuras, sino porque trabajamos en equipo y nos escuchamos."</span></li>
+                        <li><span class="action">Preguntas Profundas:</span> <span class="quote">"Pensemos fuera de la sala: ¿En qué casos o situaciones de nuestra vida aplicamos el trabajo colaborativo? (Dar palabra 1 o 2). ¿De qué forma la música nos puede enseñar a trabajar en equipo y colaborar? ¿Qué hicimos hoy que podríamos repetir para resolver problemas juntos?"</span></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>📝 3. Metacognición (Ticket de Salida)</h3>
+                    <ul>
+                        <li><span class="action">Entregar Ticket:</span> <span class="quote">"Para cerrar nuestra clase y voy a entregar y dar 5 minutos exactos para que respondan su Ticket de Salida."</span></li>
+                        <li><span class="action">Plenario:</span> <span class="quote">"(Una vez terminen) Para terminar nuestra clase y evidenciar lo que aprendimos, me gustaría que dos de ustedes compartan en voz alta frente al curso lo que respondieron..."</span></li>
+                        <li><span class="action">Preguntar al grupo:</span> <span class="quote">"¿Quién nos quiere compartir qué estrategia musical le funcionó mejor y por qué? ¿Quién se anima a leer su desafío de equipo frente a todos?"</span> (Dar palabra a 2).</li>
+                        <li><span class="action">Cierre Emocional:</span> <span class="quote">"Hoy me demostraron todos sus conocimientos musicales, y lo mejor, es que juntos logramos crear una gran batucada, espero que hayan disfrutado esta clase tanto como yo que me voy sintiendo mucho orgullo de su trabajo y sus grandes capacidades musicales."</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
